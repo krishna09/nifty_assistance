@@ -1,10 +1,3 @@
-# pylint: disable=missing-module-docstring
-# pylint: disable=missing-function-docstring
-# pylint: disable=missing-class-docstring
-# pylint: disable=too-few-public-methods
-# pylint: disable=invalid-name
-# pylint: disable=broad-except
-# pylint: disable=import-error
 import os
 import time
 from datetime import datetime
@@ -96,6 +89,7 @@ class Maintenance:
         tempDF = pd.concat([curHistoryDF, self.todaysOHLC_DF])
         saveHistoryAsPickle(tempDF, self.filename)
 
+
 @calculate_time
 def downloadNIFTYCompaniesList(niftyOf):
     nifty_url = f"https://www1.nseindia.com/content/indices/ind_nifty{niftyOf}list.csv"
@@ -105,20 +99,22 @@ def downloadNIFTYCompaniesList(niftyOf):
     return nifty_list
 
 
-class NIFTY50_HistoryFileNames:
+class NIFTY200_HistoryFileNames:
+
     def __init__(self) -> None:
-        self.sixMonthsHistFileName = 'nifty50_6_months_history.pkl'
-        self.oneYearHistFileName = 'nifty50_1y_history.pkl'
+        self.sixMonthsHistFileName = 'nifty200_6_months_history.pkl'
+        self.oneYearHistFileName = 'nifty200_1y_history.pkl'
 
 
-class Nifty50:
+class Nifty200:
     def __init__(self) -> None:
-        self.fileNames = NIFTY50_HistoryFileNames()
-        self.symbols = downloadNIFTYCompaniesList(niftyOf=50)
+        self.fileNames = NIFTY200_HistoryFileNames()
+        self.symbols = downloadNIFTYCompaniesList(niftyOf=200)
         self.sixMonthMaintenance = Maintenance(
-            self.fileNames.sixMonthsHistFileName,self.symbols)
+            self.fileNames.sixMonthsHistFileName, self.symbols)
         self.oneYearMaintenance = Maintenance(
-            self.fileNames.oneYearHistFileName,self.symbols)
+            self.fileNames.oneYearHistFileName, self.symbols)
+
     @calculate_time
     def runMaintenance(self):
         self._sixMonths()
@@ -129,11 +125,8 @@ class Nifty50:
 
     def _oneYear(self):
         self.oneYearMaintenance.run(months=12)
-    
-if __name__ == '__main__':
-    nifty50 = Nifty50()
-    # nifty50.runMaintenance()
 
-    
-    
-    
+
+if __name__ == '__main__':
+    nifty200 = Nifty200()
+    # nifty200.runMaintenance()
