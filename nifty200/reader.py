@@ -15,6 +15,11 @@ class Nifty200:
         self._showData(self.sixMonthsData,title="6")
         self._showData(self.oneYearData,title="12")
 
+    def getLastDayData(self,months):
+        if months == 6:
+            return self.sixMonthsData[self.sixMonthsData.index[-1]]
+        else:
+            return self.oneYearData[-1]
     @staticmethod
     def _showData(df, title):
         # df = self.sixMonthsData
@@ -49,5 +54,7 @@ class Nifty200:
 
 if __name__ == '__main__':
     nifty200 = Nifty200()
+    # print(nifty200.sixMonthsData.tail())
     nifty200.viewData()
-    # nifty50.viewData()
+    # df = nifty200.getLastDayData(months=6)
+    # print(df)

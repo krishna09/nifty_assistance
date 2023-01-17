@@ -49,5 +49,6 @@ class Nifty100:
 
 if __name__ == '__main__':
     nifty100 = Nifty100()
+    # print(nifty100.sixMonthsData.tail())
     nifty100.viewData()
     # nifty50.viewData()

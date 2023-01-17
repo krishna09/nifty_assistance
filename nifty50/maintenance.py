@@ -84,6 +84,7 @@ class Maintenance:
         startDate = datetime.today() - pd.offsets.DateOffset(months=offset)
         startDate = startDate.strftime("%Y-%m-%d")
         endDate = datetime.today().strftime("%Y-%m-%d")
+        print(f"Current dates: start:{startDate},end:{endDate}")
         self.historyDF = downloadHistory(self.symbols, startDate, endDate)
         saveHistoryAsPickle(self.historyDF, self.filename)
 
@@ -132,7 +133,7 @@ class Nifty50:
     
 if __name__ == '__main__':
     nifty50 = Nifty50()
-    # nifty50.runMaintenance()
+    nifty50.runMaintenance()
 
     
     

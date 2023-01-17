@@ -129,4 +129,4 @@ class Nifty100:
 
 if __name__ == '__main__':
     nifty100 = Nifty100()
-    # nifty100.runMaintenance()
+    nifty100.runMaintenance()

@@ -48,5 +48,5 @@ class Nifty50:
 
 if __name__ == '__main__':
     nifty50 = Nifty50()
+    print(nifty50.oneYearData.tail())
     nifty50.viewData()
-    # nifty50.viewData()
