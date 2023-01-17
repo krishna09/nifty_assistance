@@ -4,7 +4,6 @@ from datetime import datetime
 import pandas as pd
 import yfinance as yf
 
-
 def calculate_time(func):
     def inner1(*args, **kwargs):
         # storing time before function execution
@@ -69,8 +68,13 @@ class Maintenance:
         if not os.path.exists(self.filename):
             self.invokeSixMonthsDownloader(months)
         else:
-            self.invokeOneDay_OHLC_Downloader()
-            self.append_1D_OHLC_To_HistoryFile()
+            _curHistoryDF = readHistoryFromPickle(self.filename)  # to eliminate unnecessary download call
+            if _curHistoryDF.index[-1].day == datetime.today().day:
+                print(f'Todays:{datetime.today().strftime("%Y-%m-%d")} Data Already Present in the File')
+                # return
+            else:
+                self.invokeOneDay_OHLC_Downloader()
+                self.append_1D_OHLC_To_HistoryFile()
 
     def invokeSixMonthsDownloader(self,offset):
         print("Running invokeSixMonthsDownloader")
@@ -82,7 +86,7 @@ class Maintenance:
 
     def invokeOneDay_OHLC_Downloader(self):
         print("Running invokeOneDay_OHLC_Downloader")
-        self.todaysOHLC_DF = get_1day_OHLC(self.filename)
+        self.todaysOHLC_DF = get_1day_OHLC(self.symbols)
 
     def append_1D_OHLC_To_HistoryFile(self):
         curHistoryDF = readHistoryFromPickle(self.filename)
@@ -102,8 +106,9 @@ def downloadNIFTYCompaniesList(niftyOf):
 class NIFTY100_HistoryFileNames:
 
     def __init__(self) -> None:
-        self.sixMonthsHistFileName = 'nifty100_6_months_history.pkl'
-        self.oneYearHistFileName = 'nifty100_1y_history.pkl'
+        self._curFileBaseDir = os.path.split(__file__)[0] + os.path.sep
+        self.sixMonthsHistFileName = self._curFileBaseDir + 'nifty100_6_months_history.pkl'
+        self.oneYearHistFileName = self._curFileBaseDir + 'nifty100_1y_history.pkl'
 
 
 class Nifty100:
@@ -117,6 +122,8 @@ class Nifty100:
 
     @calculate_time
     def runMaintenance(self):
+        # print("CWD: from nifty100.maintenance:", os.getcwd(),"__file__",__file__)
+        # print(__file__)
         self._sixMonths()
         self._oneYear()
 

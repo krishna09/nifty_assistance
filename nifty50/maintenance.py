@@ -1,10 +1,3 @@
-# pylint: disable=missing-module-docstring
-# pylint: disable=missing-function-docstring
-# pylint: disable=missing-class-docstring
-# pylint: disable=too-few-public-methods
-# pylint: disable=invalid-name
-# pylint: disable=broad-except
-# pylint: disable=import-error
 import os
 import time
 from datetime import datetime
@@ -76,8 +69,13 @@ class Maintenance:
         if not os.path.exists(self.filename):
             self.invokeSixMonthsDownloader(months)
         else:
-            self.invokeOneDay_OHLC_Downloader()
-            self.append_1D_OHLC_To_HistoryFile()
+            _curHistoryDF = readHistoryFromPickle(self.filename) # to eliminate unnecessary download call
+            if _curHistoryDF.index[-1].day == datetime.today().day:
+                print(f'Todays:{datetime.today().strftime("%Y-%m-%d")} Data Already Present in the File')
+                # return
+            else:
+                self.invokeOneDay_OHLC_Downloader()
+                self.append_1D_OHLC_To_HistoryFile()
 
     def invokeSixMonthsDownloader(self,offset):
         print("Running invokeSixMonthsDownloader")
@@ -90,7 +88,7 @@ class Maintenance:
 
     def invokeOneDay_OHLC_Downloader(self):
         print("Running invokeOneDay_OHLC_Downloader")
-        self.todaysOHLC_DF = get_1day_OHLC(self.filename)
+        self.todaysOHLC_DF = get_1day_OHLC(self.symbols)
 
     def append_1D_OHLC_To_HistoryFile(self):
         curHistoryDF = readHistoryFromPickle(self.filename)
@@ -108,9 +106,9 @@ def downloadNIFTYCompaniesList(niftyOf):
 
 class NIFTY50_HistoryFileNames:
     def __init__(self) -> None:
-        self.sixMonthsHistFileName = 'nifty50_6_months_history.pkl'
-        self.oneYearHistFileName = 'nifty50_1y_history.pkl'
-
+        self._curFileBaseDir = os.path.split(__file__)[0] + os.path.sep
+        self.sixMonthsHistFileName = self._curFileBaseDir + 'nifty50_6_months_history.pkl'
+        self.oneYearHistFileName = self._curFileBaseDir + 'nifty50_1y_history.pkl'
 
 class Nifty50:
     def __init__(self) -> None:
@@ -122,6 +120,7 @@ class Nifty50:
             self.fileNames.oneYearHistFileName,self.symbols)
     @calculate_time
     def runMaintenance(self):
+        # print("CWD: from nifty50.maintenance:",os.getcwd())
         self._sixMonths()
         self._oneYear()
 
@@ -134,6 +133,8 @@ class Nifty50:
 if __name__ == '__main__':
     nifty50 = Nifty50()
     nifty50.runMaintenance()
+    # nifty50.sixMonthMaintenance.invokeOneDay_OHLC_Downloader()
+    # print(nifty50.sixMonthMaintenance.todaysOHLC_DF.tail())
 
     
     

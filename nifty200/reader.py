@@ -1,4 +1,5 @@
-from maintenance import NIFTY200_HistoryFileNames,calculate_time,readHistoryFromPickle
+# from nifty200.maintenance import
+from nifty200.maintenance import NIFTY200_HistoryFileNames,readHistoryFromPickle
 class Nifty200:
     def __init__(self):
         self.fileNames = NIFTY200_HistoryFileNames()
@@ -54,7 +55,7 @@ class Nifty200:
 
 if __name__ == '__main__':
     nifty200 = Nifty200()
-    # print(nifty200.sixMonthsData.tail())
-    nifty200.viewData()
+    print(nifty200.sixMonthsData.tail())
+    # nifty200.viewData()
     # df = nifty200.getLastDayData(months=6)
     # print(df)
