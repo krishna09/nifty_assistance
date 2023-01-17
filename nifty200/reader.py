@@ -51,11 +51,14 @@ class Nifty200:
         # fig.update_layout(height=1200 * 8, width=1400)
         fig.update_layout(height=1200 * 8, width=1500)
         fig.show()
+        # fig.write_image("something.png")
+        # fig.write_image("something.png")
+
 
 
 if __name__ == '__main__':
     nifty200 = Nifty200()
     print(nifty200.sixMonthsData.tail())
-    # nifty200.viewData()
+    nifty200.viewData()
     # df = nifty200.getLastDayData(months=6)
     # print(df)
