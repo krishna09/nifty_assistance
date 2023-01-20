@@ -70,10 +70,16 @@ class Maintenance:
             self.invokeSixMonthsDownloader(months)
         else:
             _curHistoryDF = readHistoryFromPickle(self.filename) # to eliminate unnecessary download call
+            print(f"History last entry day:{_curHistoryDF.index[-1].day},curDay:{datetime.today().day}")
             if _curHistoryDF.index[-1].day == datetime.today().day:
                 print(f'Todays:{datetime.today().strftime("%Y-%m-%d")} Data Already Present in the File')
-                # return
+                return
             else:
+                # to avoid full symbols access when not required
+                _tempDF = get_1day_OHLC(self.symbols[:2])
+                if _tempDF.index[-1] ==_curHistoryDF.index[-1]:
+                    print(f"History File Already contains last traded day data: Last Entry{_curHistoryDF.index[-1]}")
+                    return
                 self.invokeOneDay_OHLC_Downloader()
                 self.append_1D_OHLC_To_HistoryFile()
 

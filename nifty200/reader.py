@@ -5,16 +5,17 @@ class Nifty200:
         self.fileNames = NIFTY200_HistoryFileNames()
         self.sixMonthsData = readHistoryFromPickle(self.fileNames.sixMonthsHistFileName)
         self.oneYearData = readHistoryFromPickle(self.fileNames.oneYearHistFileName)
-
+        self.figOneYear = None
+        self.figSixMonths = None
     def getSymbols(self):
         return list(self.sixMonthsData.columns.levels[0])
 
     def getDataBetweenDates(self,startDate,endDate):
         pass
 
-    def viewData(self):
-        self._showData(self.sixMonthsData,title="6")
-        self._showData(self.oneYearData,title="12")
+    def viewData(self,showFig=False):
+        self.figSixMonths = self._showData(self.sixMonthsData, title="6",showFig=showFig)
+        self.figOneYear = self._showData(self.oneYearData, title="12",showFig=showFig)
 
     def getLastDayData(self,months):
         if months == 6:
@@ -22,7 +23,7 @@ class Nifty200:
         else:
             return self.oneYearData[-1]
     @staticmethod
-    def _showData(df, title):
+    def _showData(df, title,showFig):
         # df = self.sixMonthsData
         from plotly.subplots import make_subplots
         import plotly.graph_objs as go
@@ -50,7 +51,9 @@ class Nifty200:
         fig.update_layout(title=f"NIFTY 200 {title} Month History Data", showlegend=False)
         # fig.update_layout(height=1200 * 8, width=1400)
         fig.update_layout(height=1200 * 8, width=1500)
-        fig.show()
+        if showFig:
+            fig.show()
+        return fig
         # fig.write_image("something.png")
         # fig.write_image("something.png")
 
@@ -59,6 +62,6 @@ class Nifty200:
 if __name__ == '__main__':
     nifty200 = Nifty200()
     print(nifty200.sixMonthsData.tail())
-    nifty200.viewData()
+    # nifty200.viewData()
     # df = nifty200.getLastDayData(months=6)
     # print(df)
