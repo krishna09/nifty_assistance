@@ -1,10 +1,3 @@
-import sys,os
-# print(os.getcwd())
-# print("sys.path before adding")
-# print(sys.path)
-# sys.path.append(os.getcwd())
-# print("sys.path after adding")
-# print(sys.path)
 from nifty50.reader import Nifty50
 from nifty100.reader import Nifty100
 from nifty200.reader import Nifty200

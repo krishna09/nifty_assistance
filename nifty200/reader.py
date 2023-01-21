@@ -1,8 +1,9 @@
-# from nifty200.maintenance import
-from nifty200.maintenance import NIFTY200_HistoryFileNames,readHistoryFromPickle
+from core.common_maintenance import readHistoryFromPickle
+from nifty200.maintenance import HistoryFileNames
+
 class Nifty200:
     def __init__(self):
-        self.fileNames = NIFTY200_HistoryFileNames()
+        self.fileNames = HistoryFileNames()
         self.sixMonthsData = readHistoryFromPickle(self.fileNames.sixMonthsHistFileName)
         self.oneYearData = readHistoryFromPickle(self.fileNames.oneYearHistFileName)
         self.figOneYear = None
@@ -22,6 +23,7 @@ class Nifty200:
             return self.sixMonthsData[self.sixMonthsData.index[-1]]
         else:
             return self.oneYearData[-1]
+
     @staticmethod
     def _showData(df, title,showFig):
         # df = self.sixMonthsData

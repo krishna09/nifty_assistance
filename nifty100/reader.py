@@ -1,8 +1,10 @@
 # from nifty100 import maintenance
-from nifty100.maintenance import NIFTY100_HistoryFileNames,readHistoryFromPickle
+from core.common_maintenance import readHistoryFromPickle
+from nifty100.maintenance import HistoryFileNames
+
 class Nifty100:
     def __init__(self):
-        self.fileNames = NIFTY100_HistoryFileNames()
+        self.fileNames = HistoryFileNames()
         self.sixMonthsData = readHistoryFromPickle(self.fileNames.sixMonthsHistFileName)
         self.oneYearData = readHistoryFromPickle(self.fileNames.oneYearHistFileName)
         self.figOneYear = None

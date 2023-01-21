@@ -1,8 +1,9 @@
-# from nifty50 import maintenance
-from nifty50.maintenance import NIFTY50_HistoryFileNames,readHistoryFromPickle
+from core.common_maintenance import readHistoryFromPickle
+from nifty50.maintenance import HistoryFileNames
+
 class Nifty50:
     def __init__(self):
-        self.fileNames = NIFTY50_HistoryFileNames()
+        self.fileNames = HistoryFileNames()
         self.sixMonthsData = readHistoryFromPickle(self.fileNames.sixMonthsHistFileName)
         self.oneYearData = readHistoryFromPickle(self.fileNames.oneYearHistFileName)
         self.figSixMonths = None
@@ -54,6 +55,6 @@ class Nifty50:
 if __name__ == '__main__':
     nifty50 = Nifty50()
     print(nifty50.oneYearData.tail())
-    nifty50.viewData()
+    nifty50.viewData(showFig=True)
     # nifty50.figSixMonths.show()
     # nifty50.figOneYear.show()

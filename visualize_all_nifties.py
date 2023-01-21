@@ -20,10 +20,10 @@ n50 = Nifty50()
 n100 = Nifty100()
 n200 = Nifty200()
 # print(n50.fileNames.sixMonthsHistFileName.rsplit('\\',2)[0]+os.path.sep+'output_figs'+os.path.sep)
-n50.viewData()
-n100.viewData()
-n200.viewData()
-#
-saveFigures([n50,n100,n200])
+n50.viewData(showFig=True)
+# n100.viewData()
+# n200.viewData()
+# #
+# saveFigures([n50,n100,n200])
 
 

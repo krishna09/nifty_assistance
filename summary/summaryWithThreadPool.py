@@ -64,7 +64,7 @@ def getSymbolsPassedOn6MonthMinCheck(histDF, summaryModelsDict):
         _maximum = histDF[key]["Open"][:-1].max()
         # if isCurValueLessThan6MonthMin(stockModel.regular_market_price,histDF[key]):
         if round(curValue, 1) < _minimum:
-            _results.append([key, round(_minimum, 2), curValue, round(_maximum, 2)])  # min,max in 6 months
+            _results.append([key, round(_minimum, 2), curValue, round(_maximum, 2),stockModel.short_name])  # min,max in 6 months
     return _results
 
 if __name__ == '__main__':
