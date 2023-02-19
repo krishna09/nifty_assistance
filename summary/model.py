@@ -17,7 +17,7 @@ def from_str(x: Any) -> str:
 
 
 def from_bool(x: Any) -> bool:
-    assert isinstance(x, bool)
+    # assert isinstance(x, bool)
     return x
 
 
