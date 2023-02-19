@@ -1,4 +1,5 @@
 from core.common_maintenance import readHistoryFromPickle
+from core.common_technicals import find_MACD_Signal_Lines
 from nifty200.maintenance import HistoryFileNames
 
 class Nifty200:
@@ -8,6 +9,9 @@ class Nifty200:
         self.oneYearData = readHistoryFromPickle(self.fileNames.oneYearHistFileName)
         self.figOneYear = None
         self.figSixMonths = None
+        self.sixMonthsData = find_MACD_Signal_Lines(self.symbols, self.sixMonthsData)
+        self.oneYearData = find_MACD_Signal_Lines(self.symbols, self.oneYearData)
+
     def getSymbols(self):
         return list(self.sixMonthsData.columns.levels[0])
 

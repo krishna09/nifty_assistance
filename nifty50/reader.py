@@ -1,13 +1,19 @@
+import pandas as pd
+
 from core.common_maintenance import readHistoryFromPickle
+from core.common_technicals import find_MACD_Signal_Lines
 from nifty50.maintenance import HistoryFileNames
 
 class Nifty50:
     def __init__(self):
         self.fileNames = HistoryFileNames()
-        self.sixMonthsData = readHistoryFromPickle(self.fileNames.sixMonthsHistFileName)
-        self.oneYearData = readHistoryFromPickle(self.fileNames.oneYearHistFileName)
+        self.sixMonthsData:pd.DataFrame = readHistoryFromPickle(self.fileNames.sixMonthsHistFileName)
+        self.oneYearData:pd.DataFrame = readHistoryFromPickle(self.fileNames.oneYearHistFileName)
+        self.symbols = self.getSymbols()
         self.figSixMonths = None
         self.figOneYear = None
+        self.sixMonthsData = find_MACD_Signal_Lines(self.symbols,self.sixMonthsData)
+        self.oneYearData = find_MACD_Signal_Lines(self.symbols,self.oneYearData)
 
     def getSymbols(self):
         return list(self.sixMonthsData.columns.levels[0])
@@ -54,8 +60,8 @@ class Nifty50:
 
 if __name__ == '__main__':
     nifty50 = Nifty50()
-    print(nifty50.oneYearData.tail())
-    nifty50.viewData(showFig=False)
+    print(nifty50.sixMonthsData.head())
+    # nifty50.viewData(showFig=False)
 
     # nifty50.figSixMonths.show()
     # nifty50.figOneYear.show()
