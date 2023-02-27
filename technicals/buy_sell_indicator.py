@@ -1,9 +1,30 @@
+import numpy as np
+import pandas as pd
 from nifty50.reader import Nifty50
 import matplotlib.pyplot as plt
 # plt.style.use('fivethirtyeight')
 # import pandas as pd
 # # pd.set_option('mode.chained_assignment', 'raise')
 # pd.set_option('mode.chained_assignment', None) # to ignore all warnings but make sure what you are doing
+#
+
+# from concurrent.futures import ThreadPoolExecutor
+# from concurrent.futures import as_completed
+# values = [2,3,4,5]
+# def square(n):
+#     abc = pd.DataFrame()
+#     abc['a'] = range(n*100)
+#     _temp_df = pd.DataFrame()
+#     _temp_df["a"] = ta.trend.sma_indicator(abc.a,window=10)
+#     # _temp_df["b"] = ta.trend.sma_indicator(np.array(range(50)),window=10)
+#     return _temp_df
+# def main():
+#     with ThreadPoolExecutor(max_workers = 3) as executor:
+#         results = executor.map(square, values)
+#     for result in results:
+#         print(result.head())
+# if __name__ == '__main__':
+#    main()
 
 n50  = Nifty50()
 

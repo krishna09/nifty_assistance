@@ -1,7 +1,7 @@
 import pandas as pd
 
 from core.common_maintenance import readHistoryFromPickle
-from core.common_technicals import find_MACD_Signal_Lines
+from core.common_technicals import get_Technical_Decision_Lines
 from nifty50.maintenance import HistoryFileNames
 
 class Nifty50:
@@ -12,8 +12,8 @@ class Nifty50:
         self.symbols = self.getSymbols()
         self.figSixMonths = None
         self.figOneYear = None
-        self.sixMonthsData = find_MACD_Signal_Lines(self.symbols,self.sixMonthsData)
-        self.oneYearData = find_MACD_Signal_Lines(self.symbols,self.oneYearData)
+        # self.sixMonthsData = get_Technical_Decision_Lines(self.symbols,self.sixMonthsData)
+        # self.oneYearData = get_Technical_Decision_Lines(self.symbols,self.oneYearData)
 
     def getSymbols(self):
         return list(self.sixMonthsData.columns.levels[0])

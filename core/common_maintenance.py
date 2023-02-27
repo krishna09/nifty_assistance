@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 import pandas as pd
 import yfinance as yf
-
+from core.common_technicals import get_Technical_Decision_Lines
 def calculate_time(func):
     def inner1(*args, **kwargs):
         # storing time before function execution
@@ -120,6 +120,7 @@ class Maintenance:
         endDate = datetime.today().strftime("%Y-%m-%d")
         print(f"Current dates: start:{startDate},end:{endDate}")
         self.historyDF = downloadHistory(self.symbols, startDate, endDate)
+        self.historyDF = get_Technical_Decision_Lines(self.symbols,self.historyDF)
         saveHistoryAsPickle(self.historyDF, self.filename)
 
     def invokeOneDay_OHLC_Downloader(self):

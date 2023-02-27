@@ -53,7 +53,7 @@ def printInTableFormat(stocks_data,title):
     # table.set_cols_align(['l', 'l', 'r', 'r'])
     print(table)
 
-n50 = Nifty50()
+n50 =  Nifty50()
 n100 = Nifty100()
 n200 = Nifty200()
 
