@@ -112,6 +112,8 @@ class Maintenance:
                     return
                 self.invokeOneDay_OHLC_Downloader()
                 self.append_1D_OHLC_To_HistoryFile()
+                #reapply technicals on new data appended
+
 
     def invokeSixMonthsDownloader(self,offset):
         print("Running invokeSixMonthsDownloader")
@@ -130,6 +132,7 @@ class Maintenance:
     def append_1D_OHLC_To_HistoryFile(self):
         curHistoryDF = readHistoryFromPickle(self.filename)
         tempDF = pd.concat([curHistoryDF, self.todaysOHLC_DF])
+        tempDF = get_Technical_Decision_Lines(self.symbols,tempDF) # TODO: is it right place?
         saveHistoryAsPickle(tempDF, self.filename)
 
 if __name__ == '__main__':
